@@ -181,17 +181,42 @@ El entrypoint del contenedor leerá este JSON para orquestar pulls y parámetros
 - `docker-compose.yml` (solo levantar/gestionar, mapeo de `./llm-data`, puertos, health check, GPU opcional).
 - `config/ollama.config.json` (config estática descrita arriba).
 - `llm-data/` (persistencia de modelos en el proyecto).
-- `scripts/build.ps1` y `scripts/run.ps1` (atajos para construir/levantar y pruebas rápidas).
 
 1. Generar `docker-compose.yml` con servicio `ollama`, health check y GPU opcional.
 
 1. Implementar `Dockerfile` y `docker/entrypoint.sh` con lectura del JSON y pulls controlados.
 
-1. Añadir scripts PowerShell y documentar comandos de uso rápido y pruebas (Invoke-WebRequest).
-
 1. Fijar versiones (imagen y modelos) y anotar compatibilidad GPU según hardware (NVIDIA 4070 con WSL2).
 
 Nota: Si ya existen `Dockerfile`, `docker/entrypoint.sh` o scripts en este repo, en la fase de implementación alinearemos el contenido para cumplir este plan (manteniendo cambios mínimos y compatibilidad con lo ya creado).
+
+## Uso recomendado: Docker Compose (sin scripts)
+
+Para asegurar portabilidad en cualquier sistema con Docker Compose, el flujo recomendado es ejecutar Compose directamente, sin depender de scripts auxiliares:
+
+1. Construir y levantar en segundo plano:
+
+  ```powershell
+  docker compose up -d --build
+  ```
+
+1. Verificar salud del servicio (opcional):
+
+  ```powershell
+  Invoke-WebRequest -UseBasicParsing http://localhost:11434/api/tags
+  ```
+
+1. Ver logs si es necesario:
+
+  ```powershell
+  docker compose logs -f
+  ```
+
+Notas:
+
+- La carpeta `./llm-data` persiste los modelos; no se borra al reiniciar.
+- La configuración está en `config/ollama.config.json`. Puedes editar `models` y `pullOnStart` y volver a levantar.
+- La habilitación de GPU se agregará más adelante; el MVP funciona CPU-only.
 
 ---
 

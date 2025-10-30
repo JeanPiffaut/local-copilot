@@ -1,0 +1,23 @@
+name: local-ollama
+
+services:
+  ollama:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: local-ollama:dev
+    container_name: local-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./llm-data:/root/.ollama
+      - ./config:/app/config:ro
+    environment:
+      - OLLAMA_CONFIG=/app/config/ollama.config.json
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:11434/api/tags"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    restart: unless-stopped
