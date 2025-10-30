@@ -11,7 +11,7 @@
     "path": "./llm-data"
   },
   "models": [
-    "llama3:8b-instruct"
+    "llama3:8b"
   ],
   "pullOnStart": true,
   "env": {

@@ -38,7 +38,7 @@ Este documento describe el plan (sin código aún) para levantar Ollama localmen
 Notas de hardware (para orientar el baseline):
 
 - Equipo objetivo: 32 GB RAM + GPU NVIDIA RTX 4070.
-- Modelo inicial recomendado para pruebas: `llama3:8b-instruct` (baseline razonable con 8B). Más adelante afinaremos variantes/quantización según rendimiento y VRAM disponible.
+- Modelo inicial recomendado para pruebas: `llama3:8b` (baseline razonable con 8B). Más adelante afinaremos variantes/quantización según rendimiento y VRAM disponible.
 
 ## Opción 1: Docker Compose (recomendada para levantar)
 
@@ -133,7 +133,7 @@ Consideraciones:
 
 Modelo inicial (propuesto para pruebas):
 
-- `llama3:8b-instruct` como punto de partida. Más adelante podremos ajustar a otros modelos (p. ej. `mistral`, `phi`, `llama3.1`, etc.) o variantes cuantizadas si es necesario.
+- `llama3:8b` como punto de partida. Más adelante podremos ajustar a otros modelos (p. ej. `mistral`, `phi`, `llama3.1`, etc.) o variantes cuantizadas si es necesario.
 
 Configuración centralizada (JSON):
 
@@ -144,7 +144,7 @@ Configuración centralizada (JSON):
   - `gpu.enabled` (boolean): habilitar/deshabilitar GPU.
   - `gpu.vendor` (string): `nvidia` | `amd` (para documentar variaciones futuras).
   - `storage.path` (string): ruta de persistencia en el host (por defecto `./llm-data`).
-  - `models` (array de strings): lista de tags a preparar (p. ej., `['llama3:8b-instruct']`).
+  - `models` (array de strings): lista de tags a preparar (p. ej., `['llama3:8b']`).
   - `pullOnStart` (boolean): si ejecutar `ollama pull` al arrancar.
   - `env` (objeto opcional): parámetros adicionales (p. ej., `OLLAMA_NUM_THREADS`, `OLLAMA_NUM_CTX`).
 
